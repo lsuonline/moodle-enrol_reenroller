@@ -21,6 +21,11 @@
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+// require_once('classes/admin_setting_configdate.php');
+
+// Use the custom class.
+use enrol_reenroller\admin_setting_configdate;
+
 defined('MOODLE_INTERNAL') || die();
 
 if ($hassiteconfig) {
@@ -70,6 +75,23 @@ if ($hassiteconfig) {
         'd1',
         $methods
     ));
+
+    // Expired enarollment date.
+    $settings->add(new admin_setting_configdate(
+        'enrol_reenroller/startdate',
+        get_string('setting:startdate', 'enrol_reenroller'),
+        get_string('setting:startdate_desc', 'enrol_reenroller'),
+        time()
+    ));
+
+    // Add a heading.
+    $settings->add(
+        new admin_setting_heading(
+            'enrol_reenroller/timelineheader',
+            get_string('setting:timelineheader', 'enrol_reenroller'),
+            get_string('setting:timelineheader_desc', 'enrol_reenroller')
+        )
+    );
 
     // Timeline value (integer).
     $settings->add(new admin_setting_configtext(

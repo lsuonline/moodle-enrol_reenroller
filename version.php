@@ -24,7 +24,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'enrol_reenroller';
-$plugin->version   = 2025091800;
+$plugin->version   = 2025092300;
 $plugin->requires  = 2023092900;
-$plugin->maturity  = MATURITY_BETA;
-$plugin->release = '0.5-Gesticulating_Gerenuk';
+$plugin->maturity  = MATURITY_STABLE;
+$plugin->release = '1.0-Hibernating-Homunculus';

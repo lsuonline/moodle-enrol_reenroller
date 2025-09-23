@@ -59,6 +59,7 @@ class process_expired extends scheduled_task {
         $sourcerole = (int)get_config('enrol_reenroller', 'sourcerole');
         $targetrole = (int)get_config('enrol_reenroller', 'targetrole');
         $instancename = get_config('enrol_reenroller', 'instance_name') ?: 'd1';
+        $startdate = get_config('enrol_reenroller', 'startdate') ?: time();
 
         // Make sure the config is set.
         if (empty($catsetting) || $targetrole <= 0 || $sourcerole <= 0) {
@@ -83,6 +84,7 @@ class process_expired extends scheduled_task {
 
         // Add this parm.
         $parms['d1plugin'] = $instancename;
+        $parms['startdate'] = $startdate;
 
         // Find user_enrolments that meet criteria.
         $sql = "
@@ -90,10 +92,11 @@ class process_expired extends scheduled_task {
             FROM {user_enrolments} ue
             JOIN {enrol} e ON e.id = ue.enrolid
             JOIN {course} c ON c.id = e.courseid
-            WHERE e.enrol = :d1plugin
+            WHERE c.visible = 1
+              AND e.enrol = :d1plugin
               AND ue.timestart > 0
               AND ue.timestart < UNIX_TIMESTAMP()
-              AND ue.timeend > 0
+              AND ue.timeend > :startdate
               AND ue.timeend < UNIX_TIMESTAMP()
               AND ue.status = 0
               $insql";

@@ -21,8 +21,11 @@
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+// Basic strings.
 $string['pluginname'] = 'Re-Enroller';
 $string['privacy:metadata'] = 'The Re-Enroller plugin does not store personal data permanently.';
+
+// Settings strings.
 $string['setting:targetcategory'] = 'Target course categories';
 $string['setting:targetcategory_desc'] = 'Only courses in these categories will be considered.';
 $string['setting:sourcerole'] = 'Source role';
@@ -31,8 +34,14 @@ $string['setting:targetrole'] = 'Target role';
 $string['setting:targetrole_desc'] = 'Role to assign when reenrolling users.';
 $string['setting:instance_name'] = 'Enrollment method';
 $string['setting:instance_name_desc'] = 'Search for expired students enrolled via this enrollment method.';
-$string['task:processexpired'] = 'Re-enroll expired d1 users who completed configured-category courses';
+$string['setting:startdate'] = 'Enrollment expiration search date';
+$string['setting:startdate_desc'] = 'The plugin seaches for expired enrollments AFTER this date in MM/DD/YYYY format.';
+$string['setting:timelineheader'] = 'Enrollment Duration';
+$string['setting:timelineheader_desc'] = 'The number (any number) of units (days, weeks, months, years) the new enrollment will remain active.';
 $string['setting:timelinevalue'] = 'Number';
 $string['setting:timelinevalue_desc'] = 'The number of whatever units you select below. This determines when the reenroller student is expired.';
 $string['setting:timelineunit'] = 'Units';
 $string['setting:timelineunit_desc'] = 'The units that determine the duration based on the above number entered.';
+
+// Task strings.
+$string['task:processexpired'] = 'Re-enroll expired d1 users who completed configured-category courses';
