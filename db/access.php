@@ -15,16 +15,31 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ *
  * @package    enrol_reenroller
  * @copyright  2025 Onwards LSU Online & Continuing Education
- * @author     2025 Onwards Robert Russo
- * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright  2025 onwards Robert Russo
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'enrol_reenroller';
-$plugin->version   = 2025092500;
-$plugin->requires  = 2023092900;
-$plugin->maturity  = MATURITY_STABLE;
-$plugin->release = '1.1-Jerrymandering-Jaguarundi';
+$capabilities = array(
+    'enrol/reenroller:delete' => array(
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => array(
+            'manager' => CAP_PREVENT,
+            'editingteacher' => CAP_PREVENT,
+        )
+    ),
+    'enrol/reenroller:showhide' => array(
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW,
+            'editingteacher' => CAP_PREVENT,
+        )
+    ),
+);
+

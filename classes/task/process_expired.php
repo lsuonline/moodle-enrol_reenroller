@@ -114,6 +114,33 @@ class process_expired extends scheduled_task {
         foreach ($expired as $ue) {
             try {
 
+                // Check if the user has already been reenrolled.
+                $reenroller = $DB->get_records(
+                    'enrol',
+                    ['courseid' => $ue->courseid, 'enrol' => 'reenroller']
+                );
+
+                // Set these for later.
+                $completed = false;
+
+                // If we have a populated array.
+                if ($reenroller && !empty($reenroller)) {
+
+                    foreach($reenroller as $re) {
+
+                        // Check to see if they are already enrolled.
+                        $reenrolled = $DB->record_exists(
+                            'user_enrolments',
+                            ['userid' => $ue->userid, 'enrolid' => $re->id]
+                        );
+
+                        if ($reenrolled) {
+                            mtrace("enrol_reenroller: user {$ue->userid} already reenrolled in course {$ue->courseid}; skipping.");
+                            continue 2;
+                        }
+                    }
+                }
+
                 // Confirm the user actually completed the course.
                 $completed = $DB->record_exists_select(
                     'course_completions',
@@ -170,7 +197,7 @@ class process_expired extends scheduled_task {
                 $plugin->enrol_user($ourinstance, $ue->userid, $targetrole, $timestart, $timeend);
 
                 // Suspend the old user_enrolment to preserve audit trail.
-                $DB->set_field('user_enrolments', 'status', 1, ['id' => $ue->id]);
+                // $DB->set_field('user_enrolments', 'status', 1, ['id' => $ue->id]);
 
                 // Remove role_assignments created by the d1 enrolment for the course context.
                 $context = \context_course::instance($ue->courseid);

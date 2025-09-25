@@ -26,4 +26,26 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot . '/enrol/locallib.php');
 
 class enrol_reenroller_plugin extends enrol_plugin {
+
+    /**
+     * Is it possible to delete enrol instance via standard UI?
+     *
+     * @param  @object $instance
+     * @return bool
+     */
+    public function can_delete_instance($instance) {
+        $context = context_course::instance($instance->courseid);
+        return has_capability('enrol/reenroller:delete', $context);
+    }
+
+    /**
+     * Is it possible to hide/show enrol instance via standard UI?
+     *
+     * @param  @object $instance
+     * @return bool
+     */
+    public function can_hide_show_instance($instance) {
+        $context = context_course::instance($instance->courseid);
+        return has_capability('enrol/reenroller:showhide', $context);
+    }
 }
