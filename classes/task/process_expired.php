@@ -99,7 +99,7 @@ class process_expired extends scheduled_task {
               AND ue.timeend > :startdate
               AND ue.timeend < UNIX_TIMESTAMP()
               AND ue.status = 0
-              $insql";
+              AND c.category $insql";
 
         // Get the expired users.
         $expired = $DB->get_records_sql($sql, $parms);
